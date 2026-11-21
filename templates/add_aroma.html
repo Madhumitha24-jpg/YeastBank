@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Aroma Compound - YeastBank</title>
+</head>
+<body>
+
+    <h1>Add New Aroma Compound</h1>
+
+    <form action="/add-aroma" method="POST">
+
+        <label>Compound Name:</label><br>
+        <input type="text" name="compound_name" required>
+        <br><br>
+
+        <label>Chemical Category:</label><br>
+        <input type="text" name="chemical_category">
+        <br><br>
+
+        <label>Chemical Formula:</label><br>
+        <input type="text" name="chemical_formula">
+        <br><br>
+
+        <label>Aroma Description:</label><br>
+        <textarea name="aroma_description" rows="4" cols="40"></textarea>
+        <br><br>
+
+        <button type="submit">Save Aroma Compound</button>
+<label>Link to Yeast Strain:</label><br>
+
+<select name="strain_id">
+    <option value="">Not linked yet</option>
+
+    {% for strain in strains %}
+        <option value="{{ strain['id'] }}">
+            {{ strain['strain_code'] }}
+        </option>
+    {% endfor %}
+
+</select>
+
+<br><br>
+    </form>
+
+    <br>
+    <a href="/aroma">Back to Aroma Database</a>
+
+</body>
+</html>

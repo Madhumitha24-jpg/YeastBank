@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Update Performance | YeastBank{% endblock %}
+
+{% block content %}
+
+<div class="card"><h2>Update Yeast Performance Data</h2>
+
+<form method="POST" onsubmit="return validatePerformanceForm()">
+
+    <label>Select Yeast Strain</label>
+
+    <select name="strain_id" required>
+        {% for strain in strains %}
+        <option value="{{ strain.id }}">
+            {{ strain.strain_code }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Ethanol Tolerance</label>
+    <input type="text" name="ethanol_tolerance"
+           placeholder="Enter documented value">
+
+    <br><br>
+
+    <label>Temperature Range</label>
+    <input type="text" name="temperature_range"
+           placeholder="Enter documented range">
+
+    <br><br>
+
+    <label>Flocculation</label>
+    <select name="flocculation">
+        <option value="">Select</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Not reported">Not reported</option>
+    </select>
+
+    <br><br>
+
+    <label>Attenuation</label>
+    <input type="text" name="attenuation"
+           placeholder="Enter documented percentage">
+
+    <br><br>
+
+    <label>Aroma Profile</label>
+    <textarea name="aroma_profile"
+              placeholder="Enter documented aroma information"></textarea>
+
+    <br><br>
+
+    <button type="submit">Save Performance Data</button>
+
+</form>
+
+<script>
+function validatePerformanceForm() {
+
+    const fields = [
+        document.querySelector('[name="ethanol_tolerance"]').value.trim(),
+        document.querySelector('[name="temperature_range"]').value.trim(),
+        document.querySelector('[name="flocculation"]').value,
+        document.querySelector('[name="attenuation"]').value.trim(),
+        document.querySelector('[name="aroma_profile"]').value.trim()
+    ];
+
+    if (fields.every(value => value === "")) {
+        alert("Please enter at least one performance value.");
+        return false;
+    }
+
+    return true;
+}
+</script>
+
+</div>{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Edit Yeast Strain</h2>
+
+<form method="POST">
+
+    <label>Strain Code:</label><br>
+    <input type="text"
+           name="strain_code"
+           value="{{ strain['strain_code'] }}"
+           required>
+    <br><br>
+
+    <label>Strain Name:</label><br>
+    <input type="text"
+           name="strain_name"
+           value="{{ strain['strain_name'] }}"
+           required>
+    <br><br>
+
+    <label>Species:</label><br>
+    <input type="text"
+           name="species"
+           value="{{ strain['species'] }}"
+           required>
+    <br><br>
+
+    <label>Application:</label><br>
+    <input type="text"
+           name="application"
+           value="{{ strain['application'] }}"
+           required>
+    <br><br>
+
+    <button type="submit">
+        Update Yeast Strain
+    </button>
+
+</form>
+
+<br>
+
+<a href="/strains">Back to Yeast Database</a>
+
+{% endblock %}

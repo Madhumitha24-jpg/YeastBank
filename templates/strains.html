@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Yeast Database | YeastBank{% endblock %}
+
+{% block content %}
+<div class="card">
+
+    <h2>Search Yeast Strains</h2>
+
+    <form method="GET" action="/strains">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search by strain code or name..."
+            value="{{ search or '' }}"
+            style="padding:12px;width:280px;
+            max-width:100%;border:1px solid #ccc;
+            border-radius:6px;">
+<label>Filter by Species:</label>
+
+<select name="species">
+    <option value="">All Species</option>
+    {% for item in species_list %}
+    <option value="{{ item }}"
+        {% if selected_species == item %}selected{% endif %}>
+        {{ item }}
+    </option>
+    {% endfor %}
+</select>
+
+<br><br>
+
+<label>Filter by Application:</label>
+
+<select name="application">
+    <option value="">All Applications</option>
+    {% for item in application_list %}
+    <option value="{{ item }}"
+        {% if selected_application == item %}selected{% endif %}>
+        {{ item }}
+    </option>
+    {% endfor %}
+</select>
+
+<br><br>
+        <button type="submit">
+            Search
+        </button>
+
+        <a href="/strains">Clear</a>
+
+    </form>
+
+</div>
+
+<br>
+<div class="card">
+
+    <h2>Yeast Strain Database</h2>
+
+    <p>Explore the yeast strains stored in YeastBank.</p>
+
+    <p>
+        <a href="/add-strain">
+            <button>Add New Strain</button>
+        </a>
+    </p>
+
+    <div style="overflow-x:auto;">
+
+        
+<table style="width:100%; border-collapse:collapse;">
+
+    <tr style="background:#21734e; color:white;">
+        <th style="padding:12px;">ID</th>
+        <th style="padding:12px;">Strain Code</th>
+        <th style="padding:12px;">Strain Name</th>
+        <th style="padding:12px;">Species</th>
+        <th style="padding:12px;">Application</th>
+        <th style="padding:12px;">Ethanol Tolerance</th>
+        <th style="padding:12px;">Temperature Range</th>
+        <th style="padding:12px;">Flocculation</th>
+        <th style="padding:12px;">Attenuation</th>
+        <th style="padding:12px;">Aroma Profile</th>
+        <th style="padding:12px;">Actions</th>
+    </tr>
+
+    {% for strain in strains %}
+
+    <tr style="text-align:center;">
+
+        <td style="padding:12px;">{{ strain.id }}</td>
+
+        <td style="padding:12px;">
+            <a href="/strain/{{ strain.id }}">
+                {{ strain.strain_code }}
+            </a>
+        </td>
+
+        <td style="padding:12px;">{{ strain.strain_name }}</td>
+
+        <td style="padding:12px;">{{ strain.species }}</td>
+
+        <td style="padding:12px;">{{ strain.application }}</td>
+
+        <td style="padding:12px;">
+            {{ strain.ethanol_tolerance or "Not yet verified" }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ strain.temperature_range or "Not yet verified" }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ strain.flocculation or "Not yet verified" }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ strain.attenuation or "Not yet verified" }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ strain.aroma_profile or "Not yet verified" }}
+        </td>
+
+        <td style="padding:12px;">
+
+            <a href="/edit-strain/{{ strain.id }}"
+               style="background:#21734e;color:white;
+               padding:8px 12px;text-decoration:none;
+               border-radius:5px;">
+                Edit
+            </a>
+            <form method="POST"
+      action="/delete-strain/{{ strain.id }}"
+      style="display:inline;"
+      onsubmit="return confirm('Are you sure you want to delete this yeast strain? Its linked aroma compounds will become unlinked.');">
+
+    <button type="submit"
+            style="background:#b83232;color:white;
+            padding:8px 12px;border:none;
+            border-radius:5px;cursor:pointer;">
+        Delete
+    </button>
+
+</form>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<h3>Total Strains: {{ strains|length }}</h3>
+
+</div>
+
+{% endblock %}

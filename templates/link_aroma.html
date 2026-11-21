@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Link Aroma | YeastBank{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>Connect Aroma Compounds with Yeast Strains</h2>
+
+    <p>
+        Select an existing aroma compound and associate
+        it with a yeast strain.
+    </p>
+
+    {% if compounds and strains %}
+
+    <form method="POST">
+
+        <label>Select Aroma Compound</label>
+        <br>
+
+        <select name="compound_id" required>
+            {% for compound in compounds %}
+            <option value="{{ compound.id }}">
+                {{ compound.compound_name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label>Select Yeast Strain</label>
+        <br>
+
+        <select name="strain_id" required>
+            {% for strain in strains %}
+            <option value="{{ strain.id }}">
+                {{ strain.strain_code }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <button type="submit">Connect Aroma and Strain</button>
+
+    </form>
+
+    {% else %}
+
+    <p>
+        Please add at least one aroma compound and
+        one yeast strain before creating a connection.
+    </p>
+
+    {% endif %}
+
+    <br>
+
+    <a href="/aroma">Back to Aroma Database</a>
+
+</div>
+
+{% endblock %}

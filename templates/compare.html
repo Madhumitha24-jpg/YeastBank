@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Yeast Strains | YeastBank{% endblock %}
+
+{% block content %}
+<style>
+    .different {
+        background-color: #fff0d6;
+        font-weight: bold;
+    }
+
+    .same {
+        background-color: #e5f2e9;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 14px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .comparison-table th {
+        background: #21734e;
+        color: white;
+    }
+
+    .comparison-table td:first-child {
+        font-weight: bold;
+    }
+</style>
+.same {
+    background-color: #d9f2df;
+}
+
+.different {
+    background-color: #ffe2b8;
+    font-weight: bold;
+}
+
+.unverified {
+    background-color: #eeeeee;
+    color: #777777;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+<div class="card">
+    <h2>Compare Yeast Strains</h2>
+
+    <p>Select two yeast strains to compare their recorded characteristics.</p>
+
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {% endif %}
+
+    <form method="POST" action="/compare">
+
+        <label for="strain1">First yeast strain:</label>
+        <br>
+
+        <select name="strain1" id="strain1" required>
+            <option value="">Choose first strain</option>
+
+            {% for strain in strains %}
+                <option value="{{ strain['id'] }}">
+                    {{ strain['strain_code'] }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label for="strain2">Second yeast strain:</label>
+        <br>
+
+        <select name="strain2" id="strain2" required>
+            <option value="">Choose second strain</option>
+
+            {% for strain in strains %}
+                <option value="{{ strain['id'] }}">
+                    {{ strain['strain_code'] }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <button type="submit">Compare Strains</button>
+
+    </form>
+</div>
+
+{% if comparison %}
+
+<div class="card">
+    <h2>Comparison Results</h2>
+<table class="comparison-table">
+
+    <tr>
+        <th>Scientific Property</th>
+        <th>{{ comparison[0]['strain_code'] }}</th>
+        <th>{{ comparison[1]['strain_code'] }}</th>
+    </tr>
+
+    {% set properties = [
+        ('Species', 'species'),
+        ('Application', 'application'),
+        ('Ethanol Tolerance', 'ethanol_tolerance'),
+        ('Temperature Range', 'temperature_range'),
+        ('Flocculation', 'flocculation'),
+        ('Attenuation', 'attenuation'),
+        ('Aroma Profile', 'aroma_profile')
+    ] %}
+
+    {% for label, field in properties %}
+
+    {% set a = comparison[0][field] %}
+    {% set b = comparison[1][field] %}
+
+    <tr>
+        <td><strong>{{ label }}</strong></td>
+
+        <td class="{% if not a or not b %}unverified{% elif a == b %}same{% else %}different{% endif %}">
+            {{ a or 'Not yet verified' }}
+        </td>
+
+        <td class="{% if not a or not b %}unverified{% elif a == b %}same{% else %}different{% endif %}">
+            {{ b or 'Not yet verified' }}
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+    
+</div>
+<h2>Aroma Compound Comparison</h2>
+
+<div class="comparison-table">
+
+    <table>
+
+        <tr>
+            <th>{{ comparison[0]['strain_code'] }}</th>
+            <th>{{ comparison[1]['strain_code'] }}</th>
+        </tr>
+
+        <tr>
+            <td>
+                {% if aroma_comparison[0] %}
+
+                    {% for aroma in aroma_comparison[0] %}
+
+                        <p>
+                            <strong>
+                                {{ aroma['compound_name'] }}
+                            </strong>
+                        </p>
+
+                        <p>
+                            Category:
+                            {{ aroma['chemical_category'] or 'Not provided' }}
+                        </p>
+
+                        <p>
+                            Formula:
+                            {{ aroma['chemical_formula'] or 'Not provided' }}
+                        </p>
+
+                        <p>
+                            Aroma:
+                            {{ aroma['aroma_description'] or 'Not provided' }}
+                        </p>
+
+                        <hr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No aroma compounds linked yet.
+
+                {% endif %}
+            </td>
+
+            <td>
+                {% if aroma_comparison[1] %}
+
+                    {% for aroma in aroma_comparison[1] %}
+
+                        <p>
+                            <strong>
+                                {{ aroma['compound_name'] }}
+                            </strong>
+                        </p>
+
+                        <p>
+                            Category:
+                            {{ aroma['chemical_category'] or 'Not provided' }}
+                        </p>
+
+                        <p>
+                            Formula:
+                            {{ aroma['chemical_formula'] or 'Not provided' }}
+                        </p>
+
+                        <p>
+                            Aroma:
+                            {{ aroma['aroma_description'] or 'Not provided' }}
+                        </p>
+
+                        <hr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No aroma compounds linked yet.
+
+                {% endif %}
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Strain Profile | YeastBank{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>{{ strain.strain_name }}</h2>
+
+    <h3>Strain Information</h3>
+
+    <p><strong>Strain Code:</strong>
+        {{ strain.strain_code }}</p>
+
+    <p><strong>Species:</strong>
+        {{ strain.species }}</p>
+
+    <p><strong>Application:</strong>
+        {{ strain.application }}</p>
+
+    <hr>
+
+    <h3>Fermentation Performance</h3>
+<a href="/performance"
+   style="display:inline-block;
+   background:#21734e;
+   color:white;
+   padding:10px 18px;
+   text-decoration:none;
+   border-radius:6px;">
+    Update Performance Data
+</a>
+
+<br><br>
+    <p><strong>Ethanol Tolerance:</strong>
+        {{ strain.ethanol_tolerance or "Not yet verified" }}</p>
+
+    <p><strong>Temperature Range:</strong>
+        {{ strain.temperature_range or "Not yet verified" }}</p>
+
+    <p><strong>Flocculation:</strong>
+        {{ strain.flocculation or "Not yet verified" }}</p>
+
+    <p><strong>Attenuation:</strong>
+        {{ strain.attenuation or "Not yet verified" }}</p>
+
+    <hr>
+
+    <h3>Aroma Profile</h3>
+
+    <p>{{ strain.aroma_profile or "Not yet verified" }}</p>
+
+    <br>
+
+    <a href="/strains">Back to Yeast Database</a>
+
+</div>
+
+{% endblock %}

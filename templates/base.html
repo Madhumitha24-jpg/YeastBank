@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{% block title %}YeastBank{% endblock %}</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f3f7f2;
+        color: #263b32;
+    }
+
+    header {
+        background: #164b38;
+        color: white;
+        padding: 25px;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 6px;
+        display: inline-block;
+    }
+
+    nav a:hover {
+        background: #21734e;
+        color: #ffffff;
+    }
+
+    main {
+        max-width: 1050px;
+        margin: 35px auto;
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px #ddd;
+    }
+
+    h2 {
+        color: #164b38;
+    }
+
+    button {
+        background: #21734e;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #164b38;
+    }
+
+    footer {
+        background: #164b38;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 50px;
+    }
+</style>
+
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='style.css') }}">
+
+</head><body><header>
+    <h1>YeastBank</h1>
+    <p>Yeast Strain Performance Database</p><nav>
+    <a href="/">Home</a>
+    <a href="/strains">Strain Database</a>
+    <a href="/add-strain">Add Strain</a>
+    <a href="/performance">Performance</a>
+    <a href="/aroma">Aroma Database</a>
+    <a href="/add-aroma">Add Aroma</a>
+    <a href="/link-aroma">Link Aroma</a>
+    <a href="/compare">Compare Strains</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/export-excel">Export Excel</a>
+</nav>
+
+</header><main>
+    {% block content %}{% endblock %}
+</main><footer>
+    <p>YeastBank | Academic Biotechnology Project</p>
+</footer></body>
+</html>

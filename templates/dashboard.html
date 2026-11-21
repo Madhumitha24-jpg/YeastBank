@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | YeastBank{% endblock %}
+
+{% block content %}
+
+<div class="card"><h2>YeastBank Dashboard</h2>
+
+<p>Yeast Strain Performance and Aroma Analysis</p>
+
+<div class="dashboard-container">
+
+    <div class="dashboard-box">
+        <h3>Total Yeast Strains</h3>
+        <h2>{{ total_strains }}</h2>
+    </div>
+
+    <div class="dashboard-box">
+        <h3>Total Aroma Compounds</h3>
+        <h2>{{ total_compounds }}</h2>
+    </div>
+
+    <div class="dashboard-box">
+        <h3>Total Species</h3>
+        <h2>{{ total_species }}</h2>
+    </div>
+
+    <div class="dashboard-box">
+        <h3>Total Applications</h3>
+        <h2>{{ total_applications }}</h2>
+    </div>
+
+</div>
+
+</div>
+<div class="card">
+
+    <h2>Yeast Strain Distribution</h2>
+
+    <canvas id="speciesChart"></canvas>
+<div class="card">
+
+    <h2>Aroma Compound Category Distribution</h2>
+
+    <canvas id="aromaChart"></canvas>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const speciesLabels = {{ species_labels | tojson }};
+const speciesValues = {{ species_values | tojson }};
+
+const ctx = document.getElementById('speciesChart');
+
+new Chart(ctx, {
+    type: 'bar',
+
+    data: {
+        labels: speciesLabels,
+
+        datasets: [{
+            label: 'Number of Yeast Strains',
+            data: speciesValues,
+            backgroundColor: '#21734e',
+            borderWidth: 1
+        }]
+    },
+
+    options: {
+        responsive: true,
+
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+</script>
+<script>
+
+const aromaLabels = {{ aroma_labels | tojson }};
+const aromaValues = {{ aroma_values | tojson }};
+
+const aromaCtx = document.getElementById('aromaChart');
+
+new Chart(aromaCtx, {
+
+    type: 'pie',
+
+    data: {
+
+        labels: aromaLabels,
+
+        datasets: [{
+
+            label: 'Aroma Compounds',
+
+            data: aromaValues,
+
+            backgroundColor: [
+                '#21734e',
+                '#65a982',
+                '#f2c14e',
+                '#e76f51',
+                '#457b9d',
+                '#9b5de5',
+                '#f15bb5'
+            ]
+
+        }]
+
+    },
+
+    options: {
+        responsive: true
+    }
+
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Strain | YeastBank{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Add a New Yeast Strain</h2>
+
+    <p>
+        Enter the details below to add a yeast strain
+        to the YeastBank database.
+    </p>
+
+    <form action="/add-strain" method="POST">
+
+        <label for="strain_code">Strain Code</label>
+        <input
+            type="text"
+            id="strain_code"
+            name="strain_code"
+            placeholder="Example: EC-1118"
+            required
+        >
+
+        <label for="strain_name">Strain Name</label>
+        <input
+            type="text"
+            id="strain_name"
+            name="strain_name"
+            placeholder="Enter strain name"
+            required
+        >
+
+        <label for="species">Species</label>
+        <input
+            type="text"
+            id="species"
+            name="species"
+            placeholder="Example: Saccharomyces cerevisiae"
+            required
+        >
+
+        <label for="application">Application</label>
+        <input
+            type="text"
+            id="application"
+            name="application"
+            placeholder="Example: Winemaking"
+            required
+        >
+
+        <button type="submit">Save Strain</button>
+
+    </form>
+
+    <p>
+        <a href="/strains">← Back to Strain Database</a>
+    </p>
+</div>
+
+{% endblock %}

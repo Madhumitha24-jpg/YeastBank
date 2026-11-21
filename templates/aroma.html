@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Aroma Database | YeastBank{% endblock %}
+
+{% block content %}
+<div class="card">
+
+    <h2>Search Aroma Compounds</h2>
+
+    <form method="GET" action="/aroma">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search compound name..."
+            value="{{ search or '' }}"
+            style="padding:12px;width:280px;
+            max-width:100%;">
+
+        <button type="submit">Search</button>
+
+        <a href="/aroma">Clear</a>
+
+    </form>
+
+</div>
+
+<br>
+<div class="card">
+
+    <h2>YeastBank Aroma Compound Database</h2>
+
+    <p>
+        Explore aroma compounds associated with
+        yeast fermentation.
+    </p>
+
+    <p>
+        <a href="/add-aroma">
+            <button>Add Aroma Compound</button>
+        </a>
+        <a href="/link-aroma">
+    <button>Connect Aroma with Yeast Strain</button>
+</a>
+    </p>
+
+   <table style="width:100%; border-collapse:collapse;">
+
+    <tr style="background:#21734e;color:white;">
+        <th style="padding:12px;">Compound</th>
+        <th style="padding:12px;">Category</th>
+        <th style="padding:12px;">Formula</th>
+        <th style="padding:12px;">Aroma</th>
+        <th style="padding:12px;">Yeast Strain</th>
+        <th style="padding:12px;">Actions</th>
+    </tr>
+
+    {% for compound in compounds %}
+
+    <tr style="text-align:center;">
+
+        <td style="padding:12px;">
+            {{ compound.compound_name }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ compound.chemical_category }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ compound.chemical_formula }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ compound.aroma_description }}
+        </td>
+
+        <td style="padding:12px;">
+            {{ compound.strain_code or "Not specified" }}
+        </td>
+
+        <td style="padding:12px;">
+
+            <a href="/edit-aroma/{{ compound.id }}"
+               style="background:#21734e;color:white;
+               padding:8px 12px;text-decoration:none;
+               border-radius:5px;">
+                Edit
+            </a>
+<form method="POST"
+      action="/delete-aroma/{{ compound.id }}"
+      style="display:inline;"
+      onsubmit="return confirm('Are you sure you want to delete this aroma compound?');">
+
+    <button type="submit"
+            style="background:#b83232;color:white;
+            padding:8px 12px;border:none;
+            border-radius:5px;cursor:pointer;">
+        Delete
+    </button>
+
+</form>
+          
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<h3>Total Compounds: {{ compounds|length }}</h3>
+</div>
+{% endblock %}

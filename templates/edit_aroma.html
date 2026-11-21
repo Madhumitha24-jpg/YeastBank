@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Edit Aroma Compound</h2>
+
+<form method="POST">
+
+    <label>Compound Name:</label><br>
+    <input type="text"
+           name="compound_name"
+           value="{{ compound['compound_name'] }}"
+           required>
+    <br><br>
+
+    <label>Chemical Category:</label><br>
+    <input type="text"
+           name="chemical_category"
+           value="{{ compound['chemical_category'] or '' }}"
+           required>
+    <br><br>
+
+    <label>Chemical Formula:</label><br>
+    <input type="text"
+           name="chemical_formula"
+           value="{{ compound['chemical_formula'] or '' }}"
+           required>
+    <br><br>
+
+    <label>Aroma Description:</label><br>
+    <textarea name="aroma_description"
+              required>{{ compound['aroma_description'] or '' }}</textarea>
+    <br><br>
+
+    <button type="submit">Update Aroma Compound</button>
+
+</form>
+
+<br>
+
+<a href="/aroma">Back to Aroma Database</a>
+
+{% endblock %}
